@@ -1,0 +1,4 @@
+.stack-work/
+vault-data.cabal
+*~
+/dist-newstyle

@@ -1,0 +1,59 @@
+name:                vault-data
+version:             0.1.0.0
+github:              "isomarcte/vault-data"
+license:             BSD3
+author:              "David Strawn"
+maintainer:          "isomarcte@gmail.com"
+copyright:           "2020 David Strawn, isomarcte@gmail.com"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+description:         Haskell Data Type Definitions For the Hashicorp Vault API.
+
+dependencies:
+- base >= 4.7 && < 5
+
+library:
+  source-dirs: src
+
+ghc-options:
+  - -Wcompat
+  - -Werror
+  - -Weverything
+  - -Wno-unsafe
+  - -ferror-spans
+  - -flate-dmd-anal
+  - -fprint-expanded-synonyms
+  - -fprint-explicit-foralls
+  - -fprint-explicit-kinds
+  - -fprint-potential-instances
+  - -fshow-warning-groups
+
+default-extensions:
+  - Arrows
+  - DeriveDataTypeable
+  - DeriveFoldable
+  - DeriveFunctor
+  - DeriveDataTypeable
+  - DeriveGeneric
+  - DeriveTraversable
+  - DerivingStrategies
+  - DerivingVia
+  - DuplicateRecordFields
+  - EmptyDataDecls
+  - FlexibleContexts
+  - FunctionalDependencies
+  - GADTs
+  - GeneralizedNewtypeDeriving
+  - LambdaCase
+  - MultiParamTypeClasses
+  - MultiWayIf
+  - NamedFieldPuns
+  - NoImplicitPrelude
+  - OverloadedStrings
+  - PackageImports
+  - RecordWildCards
+  - StandaloneDeriving
+  - StrictData
