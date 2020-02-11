@@ -16,6 +16,7 @@ data GithubAuthRequest =
     , base_url :: Maybe Text
     , token_ttl :: Maybe TokenTTL
     , token_max_ttl :: Maybe TokenMaxTTL
+    , token_policies :: Vector
     }
   deriving (Eq, Read, Ord, Show, Generic)
 
