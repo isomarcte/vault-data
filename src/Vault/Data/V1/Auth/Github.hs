@@ -7,8 +7,7 @@ import Data.Maybe (Maybe)
 import Data.Text (Text)
 import GHC.Generics (Generic)
 import Prelude (Eq, Ord, Read, Show)
-import Vault.Data.V1.Auth.TokenMaxTTL (TokenMaxTTL)
-import Vault.Data.V1.Auth.TokenTTL (TokenTTL)
+import Vault.Data.V1.Auth.TTL (TokenMaxTTL, TokenTTL)
 
 data GithubAuthRequest =
   GithubAuthRequest
@@ -16,7 +15,6 @@ data GithubAuthRequest =
     , base_url :: Maybe Text
     , token_ttl :: Maybe TokenTTL
     , token_max_ttl :: Maybe TokenMaxTTL
-    , token_policies :: Vector
     }
   deriving (Eq, Read, Ord, Show, Generic)
 

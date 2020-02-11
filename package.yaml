@@ -35,10 +35,11 @@ ghc-options:
 
 default-extensions:
   - Arrows
+  - DataKinds
+  - DeriveDataTypeable
   - DeriveDataTypeable
   - DeriveFoldable
   - DeriveFunctor
-  - DeriveDataTypeable
   - DeriveGeneric
   - DeriveTraversable
   - DerivingStrategies
@@ -49,6 +50,7 @@ default-extensions:
   - FunctionalDependencies
   - GADTs
   - GeneralizedNewtypeDeriving
+  - KindSignatures
   - LambdaCase
   - MultiParamTypeClasses
   - MultiWayIf
