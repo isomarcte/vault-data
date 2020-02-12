@@ -10,11 +10,33 @@ module Vault.Data.V1.Auth.TTL
   , tokenExplicitMaxTTL
   ) where
 
+import Control.Applicative (empty)
+import Control.Monad (forM)
 import Data.Aeson (FromJSON, ToJSON)
 import Data.Function ((.))
+import Data.Functor (fmap)
+import Data.String (String)
 import Data.Word (Word)
 import GHC.Generics (Generic)
+import Language.Haskell.TH
 import Prelude (Bounded, Enum, Eq, Integral, Num, Ord, Read, Real, Show)
+
+ttlLabels :: [Name]
+ttlLabels =
+  fmap mkName ["TokenTTLLabel", "TokenMaxTTLLabel", "TokenExplicitMaxTTLLabel"]
+
+mkTTLLabels :: Dec
+mkTTLLabels =
+  let clauses = [ConT (mkName "Show")]
+   in DataD
+        empty
+        (mkName "TTLLabel2")
+        empty
+        empty
+        (fmap (\n -> NormalC n empty) ttlLabels)
+        [DerivClause empty clauses]
+
+$(mkTTLLabels)
 
 newtype TTL =
   TTL Word
