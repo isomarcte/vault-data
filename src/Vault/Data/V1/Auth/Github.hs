@@ -5,9 +5,10 @@ module Vault.Data.V1.Auth.Github
 import Data.Aeson (FromJSON, ToJSON)
 import Data.Maybe (Maybe)
 import Data.Text (Text)
+import Data.Vector (Vector)
 import GHC.Generics (Generic)
 import Prelude (Eq, Ord, Read, Show)
-import Vault.Data.V1.Auth.TTL (TokenMaxTTL, TokenTTL)
+import Vault.Data.V1.Auth.TTL (TokenExplicitMaxTTL, TokenMaxTTL, TokenTTL)
 
 data GithubAuthRequest =
   GithubAuthRequest
@@ -15,6 +16,9 @@ data GithubAuthRequest =
     , base_url :: Maybe Text
     , token_ttl :: Maybe TokenTTL
     , token_max_ttl :: Maybe TokenMaxTTL
+    , token_policies :: Maybe (Vector Text)
+    , token_bound_cidrs :: Maybe (Vector Text)
+    , token_explicit_max_ttl :: Maybe TokenExplicitMaxTTL
     }
   deriving (Eq, Read, Ord, Show, Generic)
 
