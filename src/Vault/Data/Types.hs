@@ -24,43 +24,49 @@ import Text.Show (Show)
 
 newtype URL =
   URL Text
-  deriving (Eq, Monoid, Ord, Semigroup, Show, Read, ToJSON, FromJSON)
+  deriving newtype (Eq, Monoid, Ord, Semigroup, ToJSON, FromJSON)
+  deriving  (Show, Read)
 
 newtype TokenPolicy =
   TokenPolicy Text
-  deriving (Eq, Monoid, Ord, Semigroup, Show, Read, ToJSON, FromJSON)
+  deriving newtype (Eq, Monoid, Ord, Semigroup, ToJSON, FromJSON)
+  deriving  (Show, Read)
 
 newtype TokenBoundCidr =
   TokenBoundCidr Text
-  deriving (Eq, Monoid, Ord, Semigroup, Show, Read, ToJSON, FromJSON)
+  deriving newtype (Eq, Monoid, Ord, Semigroup, ToJSON, FromJSON)
+  deriving  (Show, Read)
 
 newtype RequestId =
   RequestId UUID
-  deriving (Eq, Ord, Show, Read, ToJSON, FromJSON)
+  deriving newtype (Eq, Ord, ToJSON, FromJSON)
+  deriving  (Show, Read)
 
 newtype LeaseId =
   LeaseId Text
-  deriving (Eq, Monoid, Ord, Semigroup, Show, Read, ToJSON, FromJSON)
+  deriving newtype (Eq, Monoid, Ord, Semigroup, ToJSON, FromJSON)
+  deriving  (Show, Read)
 
 newtype LeaseDuration =
   LeaseDuration Word
-  deriving ( Eq
-           , Ord
-           , Show
-           , Read
-           , Enum
-           , Num
-           , Real
-           , Bounded
-           , Integral
-           , ToJSON
-           , FromJSON
-           )
+  deriving newtype ( Eq
+                   , Ord
+                   , Enum
+                   , Num
+                   , Real
+                   , Bounded
+                   , Integral
+                   , ToJSON
+                   , FromJSON
+                   )
+  deriving  (Show, Read)
 
 newtype Renewable =
   Renewable Bool
-  deriving (Eq, Ord, Show, Read, Enum, Bounded, ToJSON, FromJSON)
+  deriving (Eq, Ord, Enum, Bounded, ToJSON, FromJSON)
+  deriving  (Show, Read)
 
 newtype VaultWarning =
   VaultWarning Text
-  deriving (Eq, Monoid, Ord, Semigroup, Show, Read, ToJSON, FromJSON)
+  deriving (Eq, Monoid, Ord, Semigroup, ToJSON, FromJSON)
+  deriving  (Show, Read)

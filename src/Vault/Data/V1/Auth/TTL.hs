@@ -10,42 +10,58 @@ module Vault.Data.V1.Auth.TTL
   , tokenTTLValue
   ) where
 
-import Data.Aeson (FromJSON, ToJSON)
-import Data.Function ((.))
-import Data.Word (Word)
+import Control.Applicative ((<*), pure)
+import Control.Monad.Fail (fail)
+import Data.Aeson.Types (typeMismatch)
+import Data.Either (either)
+import Data.Function (($), (.))
+import Data.Ord ((>=))
+import Data.Scientific (Scientific)
+import Data.Semigroup ((<>))
 import GHC.Generics (Generic)
-import Prelude (Bounded, Enum, Eq, Integral, Num, Ord, Read, Real, Show)
+
+import qualified Data.Aeson as DA
+import qualified Data.Attoparsec.Text as DAT
+import qualified Prelude as P
 
 newtype TTL =
-  TTL Word
-  deriving (Enum, Eq, Num, Read, Bounded, Integral, Ord, Real, Show, Generic)
+  TTL Scientific
+  deriving (P.Eq, P.Num, P.Read, P.Ord, P.Real, P.Show, Generic)
 
-instance ToJSON TTL
+instance DA.ToJSON TTL where
+  toJSON (TTL w) = DA.toJSON . P.show $ w
 
-instance FromJSON TTL
+instance DA.FromJSON TTL where
+  parseJSON (DA.String t) =
+    either
+      fail
+      (pure . TTL)
+      (DAT.parseOnly (DAT.scientific <* DAT.endOfInput) t)
+  parseJSON (DA.Number s)
+    | s >= 0 = pure . TTL $ s
+    | P.otherwise =
+      fail $ "TTLs must be non-negative integral values: " <> (P.show s)
+  parseJSON otherwise = typeMismatch "Number" otherwise
 
 data TTLLabel
   = TokenTTLLabel
   | TokenMaxTTLLabel
   | TokenExplicitMaxTTLLabel
-  deriving (Show, Eq, Enum, Ord, Generic)
+  deriving (P.Show, P.Eq, P.Enum, P.Ord, Generic)
 
 newtype TokenTTL' (ttlLabel :: TTLLabel) =
   TokenTTL'
     { tokenTTLValue :: TTL
     }
-  deriving ( Enum
-           , Eq
-           , Num
-           , Read
-           , Bounded
-           , Integral
-           , Ord
-           , Real
-           , Show
+  deriving ( P.Eq
+           , P.Num
+           , P.Read
+           , P.Ord
+           , P.Real
+           , P.Show
            , Generic
-           , FromJSON
-           , ToJSON
+           , DA.FromJSON
+           , DA.ToJSON
            )
 
 type TokenTTL = TokenTTL' 'TokenTTLLabel
@@ -54,11 +70,11 @@ type TokenMaxTTL = TokenTTL' 'TokenMaxTTLLabel
 
 type TokenExplicitMaxTTL = TokenTTL' 'TokenExplicitMaxTTLLabel
 
-tokenTTL :: Word -> TokenTTL
+tokenTTL :: Scientific -> TokenTTL
 tokenTTL = TokenTTL' . TTL
 
-tokenMaxTTL :: Word -> TokenTTL
+tokenMaxTTL :: Scientific -> TokenTTL
 tokenMaxTTL = TokenTTL' . TTL
 
-tokenExplicitMaxTTL :: Word -> TokenTTL
+tokenExplicitMaxTTL :: Scientific -> TokenTTL
 tokenExplicitMaxTTL = TokenTTL' . TTL
