@@ -1,5 +1,5 @@
 module Vault.Data.V1.Auth.Github.ResponseData
-  (
+  ( ResponseData(..)
   ) where
 
 import Vault.Data.Types (URL)

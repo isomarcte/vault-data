@@ -27,6 +27,7 @@ ghc-options:
   - -Wcompat
   - -Werror
   - -Weverything
+  - -Wno-all-missed-specializations
   - -Wno-missing-deriving-strategies
   - -Wno-unsafe
   - -ferror-spans
